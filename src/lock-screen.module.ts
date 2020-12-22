@@ -14,5 +14,5 @@ import { NgModule } from '@angular/core';
         LockScreenComponent
     ]
 })
-export class ProductBuyPageModule {
+export class LockScreenModule {
 }

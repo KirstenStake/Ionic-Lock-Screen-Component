@@ -1,6 +1,6 @@
 {
-    "name": "ionic-simple-lockscreen",
-    "version": "0.1git push.0",
+    "name": "ionic-simple-lockscreen-md5",
+    "version": "0.0.1",
     "description": "A Simple Lock Screen Component",
     "main": "./dist/index.js",
     "typings": "./dist/index.d.ts",
