@@ -42,7 +42,7 @@ const LOCK_SCREEN_TEMPLATE = `
     `;
 
 /* Style */
-const LOCK_SCREEN_STYLE =`
+const LOCK_SCREEN_STYLE = `
           /* Animations*/
           @keyframes ILS_shake {
             from, to {
@@ -146,79 +146,79 @@ const LOCK_SCREEN_STYLE =`
 `;
 
 @Component({
-  selector:'lock-screen',
-  template:LOCK_SCREEN_TEMPLATE,
-  styles:[LOCK_SCREEN_STYLE]
+    selector: 'lock-screen',
+    template: LOCK_SCREEN_TEMPLATE,
+    styles: [LOCK_SCREEN_STYLE]
 })
 export class LockScreenComponent {
 
-  _showLockScreen:boolean;
-  ACDelbuttons:boolean;
-  passcodeWrong:boolean;
-  touchId:boolean;
+    _showLockScreen: boolean;
+    ACDelbuttons: boolean;
+    passcodeWrong: boolean;
+    touchId: boolean;
 
-  passcodeAttempts:number = 0;
+    passcodeAttempts: number = 0;
 
-  enteredPasscode:string = '';
-  passcode:string;
-  passcodeLabel:string;
-  touchLabel:string;
+    enteredPasscode: any = '';
+    passcode: string;
+    passcodeLabel: string;
+    touchLabel: string;
 
-  onCorrect:any;
-  onWrong:any;
-  selected:any;
+    onCorrect: any;
+    onWrong: any;
+    selected: any;
 
-  constructor(
-    public events:Events,
-    private navCtrl:NavController,
-    private navParams:NavParams
-  ){
-    this._showLockScreen   = true;
-    this.touchId           = navParams.data.touchId || false;
-    this.ACDelbuttons      = navParams.data.ACDelbuttons || false;
-    this.passcode          = navParams.data.code;
-    this.onCorrect         = navParams.data.onCorrect || null;
-    this.onWrong           = navParams.data.onWrong || null;
-    this.passcodeLabel     = navParams.data.passcodeLabel || 'Enter Passcode';
-    this.touchLabel        = navParams.data.passcodeLabel || 'Verify Passcode';
-  }
-
-
-  allClear():void {
-    this.enteredPasscode = "";
-  }
-
-  remove():void {
-    this.enteredPasscode = this.enteredPasscode.slice(0, -1);
-  }
-
-  digit(digit:any):void {
-    this.selected = +digit;
-    if (this.passcodeWrong) {
-      return;
+    constructor(
+        public events: Events,
+        private navCtrl: NavController,
+        private navParams: NavParams
+    ) {
+        this._showLockScreen = true;
+        this.touchId = navParams.data.touchId || false;
+        this.ACDelbuttons = navParams.data.ACDelbuttons || false;
+        this.passcode = navParams.data.code;
+        this.onCorrect = navParams.data.onCorrect || null;
+        this.onWrong = navParams.data.onWrong || null;
+        this.passcodeLabel = navParams.data.passcodeLabel || 'Enter Passcode';
+        this.touchLabel = navParams.data.passcodeLabel || 'Verify Passcode';
     }
-    this.enteredPasscode += ''+digit;
 
-    if (this.enteredPasscode.length >= 4) {
-      this.enteredPasscode = Md5.hashStr(this.enteredPasscode);
-          
-      if(this.enteredPasscode === '' + this.passcode) {
-        this.enteredPasscode = '';
-        this.passcodeAttempts= 0;
-        this.onCorrect && this.onCorrect();
-        this._showLockScreen = false;
-        this.navCtrl.pop();
-      } else {
-        this.passcodeWrong = true;
-        this.passcodeAttempts++;
-        this.onWrong && this.onWrong(this.passcodeAttempts);
-        setTimeout(()=>{
-          this.enteredPasscode = '';
-          this.passcodeWrong = false;
-        }, 800);
-      }
+
+    allClear(): void {
+        this.enteredPasscode = "";
     }
-  }
+
+    remove(): void {
+        this.enteredPasscode = this.enteredPasscode.slice(0, -1);
+    }
+
+    digit(digit: any): void {
+        this.selected = +digit;
+        if (this.passcodeWrong) {
+            return;
+        }
+        this.enteredPasscode += '' + digit;
+
+        if (this.enteredPasscode.length >= 4) {
+            this.enteredPasscode = Md5.hashStr(this.enteredPasscode);
+
+            if (this.enteredPasscode === '' + this.passcode) {
+                this.enteredPasscode = '';
+                this.passcodeAttempts = 0;
+                this.onCorrect && this.onCorrect();
+                this._showLockScreen = false;
+                this.navCtrl.pop();
+            } else {
+                this.passcodeWrong = true;
+                this.passcodeAttempts++;
+                this.onWrong && this.onWrong(this.passcodeAttempts);
+                setTimeout(() => {
+                    this.enteredPasscode = '';
+                    this.passcodeWrong = false;
+                }, 800);
+            }
+        }
+    }
 
 
 }
