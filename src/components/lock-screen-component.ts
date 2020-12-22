@@ -41,6 +41,9 @@ const LOCK_SCREEN_TEMPLATE = `
           <div (click)="digit(0)" class="ILS_digit">0</div>
           <div *ngIf="ACDelbuttons" (click)="remove()" class="ILS_digit ILS_del">DEL</div>
         </div>
+        <div *ngIf="onAdditionalLink" class="ILS_label-row ISL_label_forgot">
+            <a (click)="additionalLink()">{{additionalLinkTitle}}</a>
+        </div>
       </div>
     `;
 
@@ -168,12 +171,14 @@ export class LockScreenComponent {
     passcodeLabel: string;
     secondPasscodeLabel: string;
     passcodeSubTitle: string;
+    additionalLinkTitle: string;
     touchLabel: string;
     _firstSetPasscode: string;
 
     onCorrect: any;
     onWrong: any;
     selected: any;
+    onAdditionalLink: any;
     enteredPasscode: any = '';
 
     constructor(
@@ -182,15 +187,24 @@ export class LockScreenComponent {
         private navParams: NavParams
     ) {
         this._showLockScreen = true;
-        this.setPasscode = navParams.data.setPasscode || false;
-        this.touchId = navParams.data.touchId || false;
-        this.ACDelbuttons = navParams.data.ACDelbuttons || false;
         this.passcode = navParams.data.code;
-        this.onCorrect = navParams.data.onCorrect || null;
+        this.touchId = navParams.data.touchId || false;
+        this.setPasscode = navParams.data.setPasscode || false;
+        this.ACDelbuttons = navParams.data.ACDelbuttons || false;
+
         this.onWrong = navParams.data.onWrong || null;
+        this.onCorrect = navParams.data.onCorrect || null;
+        this.onAdditionalLink = navParams.data.onAdditionalLink || null;
+
+        this.passcodeSubTitle = navParams.data.passcodeSubTitle || null;
+        this.additionalLinkTitle = navParams.data.additionalLinkTitle || null;
+        this.touchLabel = navParams.data.passcodeLabel || 'Verify Passcode';
         this.passcodeLabel = navParams.data.passcodeLabel || 'Enter Passcode';
         this.secondPasscodeLabel = navParams.data.secondPasscodeLabel || 'Confirm passcode';
-        this.touchLabel = navParams.data.passcodeLabel || 'Verify Passcode';
+    }
+
+    additionalLink(): void {
+        this.onAdditionalLink && this.onAdditionalLink();
     }
 
     allClear(): void {
