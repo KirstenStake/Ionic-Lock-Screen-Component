@@ -3,6 +3,8 @@
  */
 import { Component } from '@angular/core';
 import { Events, NavParams, NavController } from 'ionic-angular';
+import { Md5 } from 'ts-md5/dist/md5';
+
 
 /* HTML Template */
 const LOCK_SCREEN_TEMPLATE = `
@@ -198,6 +200,8 @@ export class LockScreenComponent {
     this.enteredPasscode += ''+digit;
 
     if (this.enteredPasscode.length >= 4) {
+      this.enteredPasscode = Md5.hashStr(this.enteredPasscode);
+          
       if(this.enteredPasscode === '' + this.passcode) {
         this.enteredPasscode = '';
         this.passcodeAttempts= 0;
