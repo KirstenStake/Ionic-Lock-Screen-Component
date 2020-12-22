@@ -1,2 +1,2 @@
-export declare class ProductBuyPageModule {
+export declare class LockScreenModule {
 }

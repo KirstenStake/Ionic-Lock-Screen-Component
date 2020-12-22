@@ -1,10 +1,10 @@
 import { LockScreenComponent } from './components/lock-screen-component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-var ProductBuyPageModule = (function () {
-    function ProductBuyPageModule() {
+var LockScreenModule = (function () {
+    function LockScreenModule() {
     }
-    ProductBuyPageModule.decorators = [
+    LockScreenModule.decorators = [
         { type: NgModule, args: [{
                     imports: [
                         BrowserModule,
@@ -18,8 +18,8 @@ var ProductBuyPageModule = (function () {
                 },] },
     ];
     /** @nocollapse */
-    ProductBuyPageModule.ctorParameters = function () { return []; };
-    return ProductBuyPageModule;
+    LockScreenModule.ctorParameters = function () { return []; };
+    return LockScreenModule;
 }());
-export { ProductBuyPageModule };
+export { LockScreenModule };
 //# sourceMappingURL=lock-screen.module.js.map
