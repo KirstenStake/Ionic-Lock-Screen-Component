@@ -10,7 +10,10 @@ import { Md5 } from 'ts-md5/dist/md5';
 const LOCK_SCREEN_TEMPLATE = `
       <div class="ILS_lock" [ngClass]="!_showLockScreen ?  'ILS_lock-hidden' : ''">
         <div class="ILS_label-row">
-          {{passcodeLabel}}
+          {{ !firstPasswordSet ? passcodeLabel : secondPasscodeLabel }}
+        </div>
+        <div *ngIf="passcodeSubTitle" class="ILS_label-row ISL_label_subTitle">
+            {{passcodeSubTitle}}
         </div>
         <div class="ILS_circles-row" [ngClass]="passcodeWrong ?  'ILS_shake' : ''">
           <div class="ILS_circle" [ngClass]=" enteredPasscode.length>0 ? 'ILS_full' : ''"></div>
@@ -155,18 +158,23 @@ export class LockScreenComponent {
     _showLockScreen: boolean;
     ACDelbuttons: boolean;
     passcodeWrong: boolean;
+    setPasscode: boolean;
     touchId: boolean;
+    firstPasswordSet: boolean;
 
     passcodeAttempts: number = 0;
 
-    enteredPasscode: any = '';
     passcode: string;
     passcodeLabel: string;
+    secondPasscodeLabel: string;
+    passcodeSubTitle: string;
     touchLabel: string;
+    _firstSetPasscode: string;
 
     onCorrect: any;
     onWrong: any;
     selected: any;
+    enteredPasscode: any = '';
 
     constructor(
         public events: Events,
@@ -174,15 +182,16 @@ export class LockScreenComponent {
         private navParams: NavParams
     ) {
         this._showLockScreen = true;
+        this.setPasscode = navParams.data.setPasscode || false;
         this.touchId = navParams.data.touchId || false;
         this.ACDelbuttons = navParams.data.ACDelbuttons || false;
         this.passcode = navParams.data.code;
         this.onCorrect = navParams.data.onCorrect || null;
         this.onWrong = navParams.data.onWrong || null;
         this.passcodeLabel = navParams.data.passcodeLabel || 'Enter Passcode';
+        this.secondPasscodeLabel = navParams.data.secondPasscodeLabel || 'Confirm passcode';
         this.touchLabel = navParams.data.passcodeLabel || 'Verify Passcode';
     }
-
 
     allClear(): void {
         this.enteredPasscode = "";
@@ -199,26 +208,52 @@ export class LockScreenComponent {
         }
         this.enteredPasscode += '' + digit;
 
-        if (this.enteredPasscode.length >= 4) {
-            this.enteredPasscode = Md5.hashStr(this.enteredPasscode);
+        if (!this.setPasscode) {
+            if (this.enteredPasscode.length >= 4) {
+                this.enteredPasscode = Md5.hashStr(this.enteredPasscode);
 
-            if (this.enteredPasscode === '' + this.passcode) {
-                this.enteredPasscode = '';
-                this.passcodeAttempts = 0;
-                this.onCorrect && this.onCorrect();
-                this._showLockScreen = false;
-                this.navCtrl.pop();
-            } else {
-                this.passcodeWrong = true;
-                this.passcodeAttempts++;
-                this.onWrong && this.onWrong(this.passcodeAttempts);
-                setTimeout(() => {
+                if (this.enteredPasscode === '' + this.passcode) {
                     this.enteredPasscode = '';
-                    this.passcodeWrong = false;
-                }, 800);
+                    this.passcodeAttempts = 0;
+                    this.onCorrect && this.onCorrect();
+                    this._showLockScreen = false;
+                    this.navCtrl.pop();
+                } else {
+                    this.passcodeWrong = true;
+                    this.passcodeAttempts++;
+                    this.onWrong && this.onWrong(this.passcodeAttempts);
+                    setTimeout(() => {
+                        this.enteredPasscode = '';
+                        this.passcodeWrong = false;
+                    }, 800);
+                }
+            }
+        } else {
+            if (this.enteredPasscode.length >= 4) {
+                if (!this.firstPasswordSet) {
+                    this._firstSetPasscode = this.enteredPasscode;
+                    this.firstPasswordSet = true;
+                    this.allClear();
+                } else {
+                    if (this.enteredPasscode === this._firstSetPasscode) {
+                        this.enteredPasscode = '';
+                        this.passcodeAttempts = 0;
+                        this.onCorrect && this.onCorrect(this.enteredPasscode);
+                        this._showLockScreen = false;
+                        this.navCtrl.pop();
+                    } else {
+                        this.passcodeWrong = true;
+                        this.passcodeAttempts++;
+                        this.onWrong && this.onWrong(this.passcodeAttempts);
+                        setTimeout(() => {
+                            this._firstSetPasscode = null;
+                            this.enteredPasscode = '';
+                            this.passcodeWrong = false;
+                            this.firstPasswordSet = false;
+                        }, 800);
+                    }
+                }
             }
         }
     }
-
-
 }

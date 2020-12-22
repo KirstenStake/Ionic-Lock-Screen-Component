@@ -1,6 +1,6 @@
 {
     "name": "ionic-simple-lockscreen-md5",
-    "version": "0.0.2",
+    "version": "0.0.5",
     "description": "A Simple Lock Screen Component",
     "main": "./dist/index.js",
     "typings": "./dist/index.d.ts",
