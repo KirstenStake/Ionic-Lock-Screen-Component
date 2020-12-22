@@ -250,9 +250,9 @@ export class LockScreenComponent {
                     this.allClear();
                 } else {
                     if (this.enteredPasscode === this._firstSetPasscode) {
+                        this.onCorrect && this.onCorrect(this.enteredPasscode);
                         this.enteredPasscode = '';
                         this.passcodeAttempts = 0;
-                        this.onCorrect && this.onCorrect(this.enteredPasscode);
                         this._showLockScreen = false;
                         this.navCtrl.pop();
                     } else {
