@@ -64,8 +64,8 @@ export class HomePage {
       onWrong:function(attemptNumber){
         console.log(attemptNumber + ' wrong passcode attempt(s)');
       },
-      onAdditionalLink:function(attemptNumber){
-        console.log(attemptNumber + ' wrong passcode attempt(s)');
+      onAdditionalLink:function(){
+        console.log('anchor link clicked');
       }
     });
   }
