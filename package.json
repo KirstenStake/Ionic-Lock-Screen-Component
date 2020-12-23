@@ -1,6 +1,6 @@
 {
     "name": "ionic-simple-lockscreen-md5",
-    "version": "0.0.6",
+    "version": "0.0.9",
     "description": "A Simple Lock Screen Component",
     "main": "./dist/index.js",
     "typings": "./dist/index.d.ts",
@@ -14,7 +14,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/KirstenStake/Ionic-Lock-Screen-Component.git"
+        "url": "git+https://github.com/KirstenStake/Ionic-Lock-Screen-Component-Md5.git"
     },
     "keywords": [],
     "author": "",
