@@ -5,18 +5,20 @@ import { Md5 } from 'ts-md5/dist/md5';
 /* HTML Template */
 const LOCK_SCREEN_TEMPLATE = `
       <div class="ILS_lock" [ngClass]="!_showLockScreen ?  'ILS_lock-hidden' : ''">
+      <div class="ISL_input-content">
         <div class="ILS_label-row ISL_label_title">
-          {{ !firstPasswordSet ? passcodeLabel : secondPasscodeLabel }}
+        {{ !firstPasswordSet ? passcodeLabel : secondPasscodeLabel }}
         </div>
         <div *ngIf="passcodeSubTitle" class="ILS_label-row ISL_label_subTitle">
             {{passcodeSubTitle}}
         </div>
         <div class="ILS_circles-row" [ngClass]="passcodeWrong ?  'ILS_shake' : ''">
-          <div class="ILS_circle" [ngClass]=" enteredPasscode.length>0 ? 'ILS_full' : ''"></div>
-          <div class="ILS_circle" [ngClass]=" enteredPasscode.length>1 ? 'ILS_full' : ''"></div>
-          <div class="ILS_circle" [ngClass]=" enteredPasscode.length>2 ? 'ILS_full' : ''"></div>
-          <div class="ILS_circle" [ngClass]=" enteredPasscode.length>3 ? 'ILS_full' : ''"></div>
+        <div class="ILS_circle" [ngClass]=" enteredPasscode.length>0 ? 'ILS_full' : ''"></div>
+        <div class="ILS_circle" [ngClass]=" enteredPasscode.length>1 ? 'ILS_full' : ''"></div>
+        <div class="ILS_circle" [ngClass]=" enteredPasscode.length>2 ? 'ILS_full' : ''"></div>
+        <div class="ILS_circle" [ngClass]=" enteredPasscode.length>3 ? 'ILS_full' : ''"></div>
         </div>
+      </div>
         <div class="ILS_numbers-row">
           <div (click)="digit(1)" class="ILS_digit">1</div>
           <div (click)="digit(2)" class="ILS_digit">2</div>
@@ -79,6 +81,12 @@ const LOCK_SCREEN_STYLE = `
           .ILS_lock-hidden {
             display: none;
           }
+          .ISL_input-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+          }
           .ILS_label-row {
             height: 50px;
             width: 100%;
@@ -88,7 +96,6 @@ const LOCK_SCREEN_STYLE = `
           }
           .ISL_label_title {
             font-size: 34px;
-            // margin-bottom: 0.5em;
             text-transform: uppercase;
           }
           .ISL_label_subTitle {
@@ -156,7 +163,7 @@ const LOCK_SCREEN_STYLE = `
             flex-direction: row;
             justify-content: center;
             width: 100%;
-            height: 200px;
+            height: 50px;
           }
           .ILS_circle {
             background-color: transparent;
