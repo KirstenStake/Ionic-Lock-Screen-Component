@@ -5,11 +5,11 @@ import { Md5 } from 'ts-md5/dist/md5';
 /* HTML Template */
 const LOCK_SCREEN_TEMPLATE = `
       <div class="ILS_lock" [ngClass]="!_showLockScreen ?  'ILS_lock-hidden' : ''">
-      <div class="ISL_input-content">
-        <div class="ILS_label-row ISL_label_title">
+      <div class="ILS_input-content">
+        <div class="ILS_label-row ILS_label_title">
         {{ !firstPasswordSet ? passcodeLabel : secondPasscodeLabel }}
         </div>
-        <div *ngIf="passcodeSubTitle" class="ILS_label-row ISL_label_subTitle">
+        <div *ngIf="passcodeSubTitle" class="ILS_label-row ILS_label_subTitle">
             {{passcodeSubTitle}}
         </div>
         <div class="ILS_circles-row" [ngClass]="passcodeWrong ?  'ILS_shake' : ''">
@@ -20,22 +20,22 @@ const LOCK_SCREEN_TEMPLATE = `
         </div>
       </div>
         <div class="ILS_numbers-row">
-          <div (click)="digit(1)" class="ILS_digit">1</div>
-          <div (click)="digit(2)" class="ILS_digit">2</div>
-          <div (click)="digit(3)" class="ILS_digit">3</div>
+          <a (click)="digit(1)" class="ILS_digit">1</a>
+          <a (click)="digit(2)" class="ILS_digit">2</a>
+          <a (click)="digit(3)" class="ILS_digit">3</a>
         </div>
         <div class="ILS_numbers-row">
-          <div (click)="digit(4)" class="ILS_digit">4</div>
-          <div (click)="digit(5)" class="ILS_digit">5</div>
-          <div (click)="digit(6)" class="ILS_digit">6</div>
+          <a (click)="digit(4)" class="ILS_digit">4</a>
+          <a (click)="digit(5)" class="ILS_digit">5</a>
+          <a (click)="digit(6)" class="ILS_digit">6</a>
         </div>
         <div class="ILS_numbers-row">
-          <div (click)="digit(7)" class="ILS_digit">7</div>
-          <div (click)="digit(8)" class="ILS_digit">8</div>
-          <div (click)="digit(9)" class="ILS_digit">9</div>
+          <a (click)="digit(7)" class="ILS_digit">7</a>
+          <a (click)="digit(8)" class="ILS_digit">8</a>
+          <a (click)="digit(9)" class="ILS_digit">9</a>
         </div>
         <div class="ILS_numbers-row">
-          <div *ngIf="onAdditionalLink" (click)="additionalLink()" class="ILS_digit ISL_label_link">
+          <div *ngIf="onAdditionalLink" (click)="additionalLink()" class="ILS_digit ILS_label_link">
           {{ additionalLinkTitle }}
           </div>
           <div (click)="digit(0)" class="ILS_digit">0</div>
@@ -75,13 +75,13 @@ const LOCK_SCREEN_STYLE = `
             width: 100%;
             height: 100%;
             z-index: 999;
-            padding: 45px 0;
+            padding: 65px 0;
             background-color: #f9f9f9;
           }
           .ILS_lock-hidden {
             display: none;
           }
-          .ISL_input-content {
+          .ILS_input-content {
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -94,15 +94,15 @@ const LOCK_SCREEN_STYLE = `
             padding-top: 10px;
             color: #141414;
           }
-          .ISL_label_title {
+          .ILS_label_title {
             font-size: 34px;
             text-transform: uppercase;
           }
-          .ISL_label_subTitle {
+          .ILS_label_subTitle {
             font-size: 14px;
             padding-top: 0;
           }
-          .ISL_label_link {
+          .ILS_label_link {
             color: #666666 !important;
             font-size: 14px !important;
             padding-top: 26px !important;
@@ -148,7 +148,7 @@ const LOCK_SCREEN_STYLE = `
             transform: rotate(45deg)
             }
            
-            .ILS_del::after {
+          .ILS_del::after {
             width: 10px;
             height: 10px;
             border-top: 2px solid;
@@ -170,7 +170,7 @@ const LOCK_SCREEN_STYLE = `
             border-radius: 50%;
             width: 12px;
             height: 12px;
-            border: solid 1.5px #141414;
+            border: solid 1.9px #141414;
             margin: 0 15px;
           }
           .ILS_numbers-row {
@@ -187,15 +187,16 @@ const LOCK_SCREEN_STYLE = `
             height: 68px;
             text-align: center;
             padding-top: 22px;
-            font-size: 25px;
+            font-size: 30px;
             color: #141414;
-            background-color: #eaebeb;
+            font-weight: bold;
+            background-color: transparent;
           }
           .ILS_digit.activated {
             -webkit-animation-name: ILS_buttonPress;
             animation-name: ILS_buttonPress;
-            -webkit-animation-duration: 0.3;
-            animation-duration: 0.3s;
+            -webkit-animation-duration: 1;
+            animation-duration: 1s;
           }
           .ILS_full {
             background-color:#141414!important;
