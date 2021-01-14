@@ -26,6 +26,7 @@ export declare class LockScreenComponent {
     constructor(events: Events, navParams: NavParams, navCtrl: NavController);
     additionalLink(): void;
     _allClear(): void;
+    close(): void;
     remove(): void;
     digit(digit: any): void;
 }
